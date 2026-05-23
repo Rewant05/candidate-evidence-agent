@@ -1,4 +1,4 @@
-# Candidate Evidence Agent v2
+# Candidate Evidence Agent 
 
 A proof-based hiring workflow prototype inspired by BreakoutAI-style agentic recruiting.
 
