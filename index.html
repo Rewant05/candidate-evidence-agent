@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Candidate Evidence Agent</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg-grid"></div>
+
+  <header class="hero">
+    <div>
+      <p class="eyebrow">BreakoutAI-style product experiment</p>
+      <h1>Candidate Evidence Agent</h1>
+      <p class="subtitle">
+        A proof-based hiring workflow that turns scattered candidate signals into an auditable recruiter brief.
+      </p>
+    </div>
+    <div class="hero-card">
+      <span class="pulse"></span>
+      <div>
+        <strong>Mode</strong>
+        <p>Human-in-the-loop recruiting agent</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <aside class="sidebar">
+      <button class="tab-btn active" data-tab="inputs">1. Inputs</button>
+      <button class="tab-btn" data-tab="analysis">2. Evidence Analysis</button>
+      <button class="tab-btn" data-tab="brief">3. Recruiter Brief</button>
+      <button class="tab-btn" data-tab="audit">4. Audit Trail</button>
+      <button class="tab-btn" data-tab="compare">5. Compare</button>
+    </aside>
+
+    <section class="workspace">
+      <section id="inputs" class="tab active">
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">Step 01</p>
+              <h2>Candidate + Role Context</h2>
+            </div>
+            <button id="sampleBtn" class="secondary">Fill BreakoutAI Sample</button>
+          </div>
+
+          <div class="grid-2">
+            <label>Candidate Name
+              <input id="candidateName" placeholder="Rewant Anand" />
+            </label>
+            <label>Role Applied
+              <input id="roleApplied" placeholder="Agentic AI / Full Stack Intern" />
+            </label>
+          </div>
+
+          <label>Job Description / Hiring Bar
+            <textarea id="jobDescription" rows="7" placeholder="Paste the role context, hiring bar, or founder's note..."></textarea>
+          </label>
+
+          <label>Candidate Summary / Resume Snippet
+            <textarea id="candidateSummary" rows="6" placeholder="Paste resume summary or candidate background..."></textarea>
+          </label>
+
+          <label>Project Evidence
+            <textarea id="projectEvidence" rows="9" placeholder="Paste projects with stack, links, impact, and what the candidate personally built..."></textarea>
+          </label>
+
+          <div class="grid-2">
+            <label>GitHub URL
+              <input id="githubUrl" placeholder="https://github.com/..." />
+            </label>
+            <label>Portfolio URL
+              <input id="portfolioUrl" placeholder="https://portfolio..." />
+            </label>
+          </div>
+
+          <div class="grid-2">
+            <label>LinkedIn URL
+              <input id="linkedinUrl" placeholder="https://linkedin.com/in/..." />
+            </label>
+            <label>Product Hunt URL
+              <input id="productHuntUrl" placeholder="https://producthunt.com/@..." />
+            </label>
+          </div>
+
+          <label>Extra Written Answers / Assignment Notes
+            <textarea id="assignmentNotes" rows="5" placeholder="Paste Product Hunt assignment notes, founder response, written answers, etc..."></textarea>
+          </label>
+
+          <div class="control-grid">
+            <label>Full-stack Weight
+              <input id="fullstackWeight" type="range" min="0" max="30" value="18" />
+              <span id="fullstackWeightValue">18</span>
+            </label>
+            <label>AI / Agentic Weight
+              <input id="aiWeight" type="range" min="0" max="35" value="25" />
+              <span id="aiWeightValue">25</span>
+            </label>
+            <label>Proof-of-work Weight
+              <input id="proofWeight" type="range" min="0" max="30" value="22" />
+              <span id="proofWeightValue">22</span>
+            </label>
+          </div>
+
+          <div class="actions">
+            <button id="runAgentBtn">Run Evidence Agent</button>
+            <button id="clearBtn" class="ghost">Clear</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="analysis" class="tab">
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">Step 02</p>
+              <h2>Evidence Analysis</h2>
+            </div>
+            <span class="status-pill" id="analysisStatus">Not run</span>
+          </div>
+
+          <div id="scoreGrid" class="score-grid"></div>
+          <div id="evidenceMatrix" class="matrix empty">
+            <h3>No analysis yet</h3>
+            <p>Run the agent from the Inputs tab.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="brief" class="tab">
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">Step 03</p>
+              <h2>Structured Recruiter Brief</h2>
+            </div>
+            <div class="actions compact">
+              <button id="copyBriefBtn" class="secondary">Copy</button>
+              <button id="downloadMdBtn" class="secondary">Download MD</button>
+              <button id="downloadJsonBtn" class="secondary">Download JSON</button>
+            </div>
+          </div>
+          <div id="briefOutput" class="brief empty">
+            <h3>No brief generated</h3>
+            <p>Run the agent first.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="audit" class="tab">
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">Step 04</p>
+              <h2>Audit Trail + Guardrails</h2>
+            </div>
+          </div>
+          <div id="auditOutput" class="audit empty">
+            <h3>No audit trail yet</h3>
+            <p>The agent records every scoring decision after analysis.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="compare" class="tab">
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">Step 05</p>
+              <h2>Compare Candidate Briefs</h2>
+            </div>
+          </div>
+
+          <p class="muted">
+            Paste two generated JSON briefs to compare them. This shows how the workflow can support recruiter review without hiding the evidence.
+          </p>
+
+          <div class="grid-2">
+            <label>Candidate A JSON
+              <textarea id="candidateAJson" rows="9" placeholder="Paste downloaded JSON brief..."></textarea>
+            </label>
+            <label>Candidate B JSON
+              <textarea id="candidateBJson" rows="9" placeholder="Paste downloaded JSON brief..."></textarea>
+            </label>
+          </div>
+
+          <div class="actions">
+            <button id="compareBtn">Compare Briefs</button>
+          </div>
+          <div id="compareOutput" class="compare-box empty">
+            <h3>No comparison yet</h3>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <strong>Design principle:</strong> The agent does not silently invent facts. Every positive signal should map back to candidate-provided evidence, and risky decisions stay human-reviewed.
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
